@@ -16,7 +16,7 @@ private:
 public:
 	Constante(double val) : _value(val) { cout << "(" << this << ") Constante(" << _value << ") Constructed!" << endl; }
 	double operator()(double x) {
-		return _value;
+		return x;
 	}
 };
 
@@ -40,7 +40,7 @@ public:
 	Potencial(double val) : _value(val) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial() { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x){ 
-		return _value;
+		return x;
 	}
 private:
 	double _value;
@@ -54,7 +54,7 @@ public:
 	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
 	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
-		return _value;
+		return x;
 	}
 private:
 	double _value;
@@ -84,20 +84,21 @@ public:
 	}
 };
 
-/*
-class FuncaoAgregada : public Funcao {};
 
+class FuncaoAgregada : public Funcao {
+public:
+	void agrega(Funcao *f){}
+	double operator()(double x) {
+		return x;
+	}
 
-class Exponencial : public Funcao {};
-*/
-
-
+};
 
 
 void main()
 {
 	//Funcao ();
-	Escalar g(3, new Potencial(2));// g(x) = 3xˆ2;
+	//Escalar g(3, new Potencial(2));// g(x) = 3xˆ2;
 	Constante i(5);    //i(x)=5;
 	Escalar h(2);
 	
