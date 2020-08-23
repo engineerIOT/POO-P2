@@ -26,13 +26,26 @@ public:
 	Escalar (double val,Funcao *f): _value(val), f(f){}
 	Escalar	(Funcao* f){}
 	Escalar(double val) : _value(val) { cout << "(" << this << ") Escalar(" << _value << ") Constructed!" << endl; }
-	Escalar() { cout << "(" << this << ") Escalar Constructed!" << endl; } //construtor padraoa
+	Escalar() { cout << "(" << this << ") Escalar Constructed!" << endl; } //construtor padrao
 private:
 	double _value;
 	Funcao* f;
 };
 
 
+class Potencial : public Funcao {
+public:
+	Potencial(double val, Funcao *f): _value(val), f(f){}
+	Potencial(Funcao* f) {}
+	Potencial(double val) : _value(val) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
+	Potencial() { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
+	double operator()(double x){ 
+		return _value;
+	}
+private:
+	double _value;
+	Funcao* f;
+};
 
 class Seno : public Funcao {
 public:
@@ -60,7 +73,7 @@ public:
 /*
 class FuncaoAgregada : public Funcao {};
 
-class Potencial : public Funcao {};
+
 class Exponencial : public Funcao {};
 */
 
@@ -69,7 +82,8 @@ class Exponencial : public Funcao {};
 
 void main()
 {
-	Funcao ();
+	//Funcao ();
+	Escalar g(3, new Potencial(2));// g(x) = 3xˆ2;
 	Constante i(5);    //i(x)=5;
 	Escalar h(2);
 	
