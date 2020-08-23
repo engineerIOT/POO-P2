@@ -47,6 +47,20 @@ private:
 	Funcao* f;
 };
 
+class Exponencial : public Funcao {
+public:
+	Exponencial(double val, Funcao* f) : _value(val), f(f) {}
+	Exponencial(Funcao* f) {}
+	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
+	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
+	double operator()(double x) {
+		return _value;
+	}
+private:
+	double _value;
+	Funcao* f;
+};
+
 class Seno : public Funcao {
 public:
 	Seno(double val, Funcao* f) {}
