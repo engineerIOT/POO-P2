@@ -25,6 +25,7 @@ class Escalar : public Funcao {
 public:
 	Escalar (double val,Funcao *f): _value(val), f(f){}
 	Escalar	(Funcao* f){}
+	Escalar(double val) : _value(val) { cout << "(" << this << ") Escalar(" << _value << ") Constructed!" << endl; }
 	Escalar() { cout << "(" << this << ") Escalar Constructed!" << endl; } //construtor padraoa
 private:
 	double _value;
@@ -70,7 +71,7 @@ void main()
 {
 	Funcao ();
 	Constante i(5);    //i(x)=5;
-	
+	Escalar h(2);
 	
 }
 
