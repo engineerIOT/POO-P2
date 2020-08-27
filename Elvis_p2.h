@@ -7,7 +7,7 @@ public:
 	Funcao(Funcao* f) { }
 	Funcao() { /*cout << "(" << this << ") Funcao Constructed!" << endl;*/ } //construtor padrao
 	virtual ~Funcao() {} //destrutor padrao
-	double operator() (double x = 0) {
+	double operator() (double x) {
 		return x;
 	}
 	double integrar (Funcao* f, double x0, double x1, double step){
@@ -22,14 +22,15 @@ public:
 };
 
 class Constante : public Funcao {
-private:
-	double _value;
 public:
 	Constante(double val) : _value(val) { cout << "(" << this << ") constante(x)=(" << _value << ") " << endl; }
+	//Constante() {}
 	double operator()(double x) {
-
 		return (_value);
 	}
+
+private:
+	double _value;
 };
 
 
@@ -40,14 +41,13 @@ public:
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
-		double _escalar ;
-		_escalar = (*f)(x);
-		_escalar = _escalar * _value;
-		return (_escalar);
+		_escalarResultado = _value * x;
+		return(_escalarResultado);
 	}
 private:
 	double _value;
 	Funcao* f;
+	double _escalarResultado;
 };
 
 
@@ -101,35 +101,44 @@ private:
 
 class Seno : public Funcao {
 public:
-	Seno(double val, Funcao* f) {}
-	Seno(Funcao* f) {}
-	Seno(double val) {}
+	Seno(double val, Funcao* f) : _value(val), f(f) {}
+	Seno(Funcao* f) : f(f) {}
+	Seno(double val) : _value(val) {}
 	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		return (sin(x));
 	}
 
+private:
+	double _value;
+	Funcao* f;
+
 };	
 
 class Coseno : public Funcao {
 public:
-	Coseno(double val, Funcao* f) {}
-	Coseno(Funcao* f) {}
-	Coseno(double val) {}
+	Coseno(double val, Funcao* f) : _value(val), f(f) {}
+	Coseno(Funcao* f) : f(f) {}
+	Coseno(double val) : _value(val) {}
 	Coseno() { cout << "(" << this << ") Coseno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		return (cos(x));
 	}
+
+private:
+	double _value;
+	Funcao* f;
 };
 
 
 class FuncaoAgregada : public Funcao {
 public:
+	FuncaoAgregada() {}
 	void agrega(Funcao *f){
 		_myvector.push_back(f);
 	}
-	double operator()(const double x) {
-		double _funcaoAgregada=0;
+	double operator()(double x) {
+		double _funcaoAgregada= 0;
 		for (it = _myvector.begin(); it != _myvector.end(); it++) {
 			_funcaoAgregada += static_cast<Funcao*>(*it)->operator()(x);
 		}
@@ -144,15 +153,17 @@ private:
 
 void main()
 {
-	Escalar g(3, new Potencial(2)); //g(x) = 3x^2
-	Escalar h(1);					//i(x)=5;
-	//Constante i(2);					//i(x)=5;
 	
-	
+	Escalar g(3, new Potencial (2)); //g(x) = 3x^2
+	Constante h(2);
+	Escalar i(2);
 	
 
+
 	FuncaoAgregada f;
-	f.agrega(&g); f.agrega(&h); //f.agrega(&i);
+	f.agrega(&g); 
+	f.agrega(&h); 
+	//f.agrega(&i);
 
 	double x = 0;
 	while (x < 5) {
