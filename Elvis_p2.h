@@ -25,8 +25,9 @@ class Constante : public Funcao {
 private:
 	double _value;
 public:
-	Constante(double val) : _value(val) { cout << "(" << this << ") f(x)=(" << _value << ") " << endl; }
-	double operator()(double) {
+	Constante(double val) : _value(val) { cout << "(" << this << ") constante(x)=(" << _value << ") " << endl; }
+	double operator()(double x) {
+
 		return (_value);
 	}
 };
@@ -35,11 +36,11 @@ public:
 class Escalar : public Funcao {
 public:
 	Escalar (double val,Funcao *f): _value(val), f(f){}
-	Escalar(Funcao* f) : f(f){ }
-	Escalar(double val) : _value(val) { cout << "(" << this << ") g(x)=(" << _value << ") " << endl; }
+	Escalar(Funcao* f) : f(f){ } //comentado porque estava dando conflito com o outro construtor
+	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
-		double _escalar = 0;
+		double _escalar ;
 		_escalar = (*f)(x);
 		_escalar = _escalar * _value;
 		return (_escalar);
@@ -57,10 +58,15 @@ public:
 	Potencial(double val) : _value(val) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial() { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x){ 
-		double _potencial = x;
-		uint8_t i;
-		for (i = 0; i < (_value - 1); i++) {
-			_potencial *= x;
+		double _potencial = _value;
+		int i;
+		for (i = 0; i < (x - 1); i++) {
+			_potencial *= _value;
+
+			if (x == 0) // Qualquer numero elevado a 0 é igual 1
+			{
+				_potencial = 1;
+			}
 		}
 		return (_potencial);
 	}
@@ -76,7 +82,17 @@ public:
 	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
 	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
-		return x;
+		double _exponencial = _value;
+		int i;
+		for (i = 0; i < (x - 1); i++) {
+			_exponencial *= _value;
+
+			if (x == 0) // Qualquer numero elevado a 0 é igual 1
+			{
+				_exponencial = 1;
+			}
+		}
+		return (_exponencial);
 	}
 private:
 	double _value;
@@ -128,14 +144,15 @@ private:
 
 void main()
 {
-	//Funcao ();
+	Escalar g(3, new Potencial(2)); //g(x) = 3x^2
+	Escalar h(1);					//i(x)=5;
+	//Constante i(2);					//i(x)=5;
 	
-	//Escalar g(0);    //i(x)=5;
-	Constante h(0);
-	Constante i(0);
+	
+	
 
 	FuncaoAgregada f;
-	f.agrega(&h); f.agrega(&i); 
+	f.agrega(&g); f.agrega(&h); //f.agrega(&i);
 
 	double x = 0;
 	while (x < 5) {
