@@ -10,10 +10,10 @@ public:
 	double operator() (double x) { 
 		return x; //a classe funcao retorna o valor da funcao através do operador de chamada de funcao
 	}
-	static double integrar (Funcao* f, double x0, double x1, double step){	// método estático 
+	double integrar (Funcao* f, double x0, double x1, double step){	// método estático 
 		double _area = 0;
 		double i;
-		for (i = x0; i <= x1 - 1; i += step) {
+		for (i = x0; i <= x1; i += step) {
 			cout << "f(x) = " << f->operator()(i) << "\n";
 			_area += ((f->operator()(i)) * step);
 		}
@@ -47,7 +47,7 @@ public:
 	Constante(double val) : _value(val) { cout << "(" << this << ") constante(x)=(" << _value << ") " << endl; }
 	Constante() {}
 	double operator()(double x) {
-		return (_value);
+				return (_value);
 	}
 
 private:
@@ -159,11 +159,11 @@ void main()
 {
 	
 	//Escalar g(1, new Potencial (1)); //g(x) = 3x^2
-	//Escalar h(3);
-	//Constante i(8);
+	Escalar h(3);
+	Constante i(8);
 	//Escalar i(3);
-	Constante h(3);
-	Constante i(3);
+	//Constante h(3);
+	//Constante i(3);
 
 
 	FuncaoAgregada f;
@@ -171,11 +171,11 @@ void main()
 	f.agrega(&h); 
 	f.agrega(&i);
 
-	double x = 0;
+	/*double x = 0;
 	while (x < 5) {
 		cout << "f(" << x << ") = " << f(x) << endl;
 		x += 1;
-	}
+	}*/
 
 	cout << " A integral de [0,5] : ";
 	cout << f.integrar(&f, 0, 5, 1) << endl;
