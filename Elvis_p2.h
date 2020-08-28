@@ -21,11 +21,10 @@ public:
 		double _operatorX1;
 		double _i;
 
-		for (_i = x0 +step ; _i < x1-1; _i += step)
+		for (_i = step; _i <= x1-1; _i += step)
 		{
-			cout << "f(x) = " << f->operator()(_i) << "\n";
+			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
-
 		}
 
 		_operatorX0 = f->operator()(x0);
@@ -58,7 +57,7 @@ public:
 		for (_myVectorFunction::iterator it= _myvector.begin(); it != _myvector.end(); it++) {
 			_funcaoAgregada += static_cast<Funcao*>(*it)->operator()(x);
 		}
-		//cout << "Funcao agrgada resultado: f(" << x << ")= " << _funcaoAgregada << endl;
+		//cout << "Funcao agregada resultado: f(" << x << ")= " << _funcaoAgregada << endl;
 		return _funcaoAgregada;
 
 	}
@@ -248,16 +247,16 @@ void teste() {
 
 	//Potencial p(2, new Escalar(2));
 	//cout << p(3) << endl;
-
+	/*
 	double x = 0;
 	while (x < 5) {
 		cout << "f(" << x << ") = " << f(x) << endl;
 		x += 0.01;
 	}
-
+	*/
 	cout << " A integral de [0,5] : ";
 	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
-
+	
 	//	f(1);
 
 }
