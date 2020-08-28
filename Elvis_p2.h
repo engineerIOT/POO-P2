@@ -4,7 +4,7 @@
 #include <iostream>		//biblioteca entradas e saidas
 using namespace std;
 #include <vector>		//adicionada para utilizar na funcao agrega
-#include <math.h>	     			
+#include <math.h>	    //adicionada para utilizar nas funcoes seno e coseno 			
 
 class Funcao {				//Uma classe abstrata que serve de modelo para outras classes.
 public:
