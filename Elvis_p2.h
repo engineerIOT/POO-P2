@@ -5,6 +5,7 @@
 using namespace std;
 #include <vector>		//adicionada para utilizar na funcao agrega
 #include <math.h>	    //adicionada para utilizar nas funcoes seno e coseno 			
+#define VALUE_DEFAULT	70.29525	
 
 class Funcao {				//Uma classe abstrata que serve de modelo para outras classes.
 public:
@@ -22,10 +23,9 @@ public:
 		double _i;
 
 		for (_i = step; _i <= x1-1; _i += step)
-		{
-			
-			_area += ((f->operator()(_i)));
+		{	
 			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
+			_area += ((f->operator()(_i)));
 		}
 
 		_operatorX0 = f->operator()(x0);
@@ -33,6 +33,8 @@ public:
 		//double _somaOperador = (_operatorX1 + _operatorX0);
 		//double _diferencaOperador = (_operatorX1 - _operatorX0);
 		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1); //formula do trapezio
+		double erro = ((_i -(VALUE_DEFAULT)) / _i)* 100;
+		cout << "erro = " << fabs(erro) << "%" << "\n";
 		return _i;
 		
 			
