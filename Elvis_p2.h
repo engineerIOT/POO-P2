@@ -86,6 +86,8 @@ public:
 		cout << "escalar resultado: " << _escalarResultado << endl;
 		return(_escalarResultado);
 	}
+
+	
 private:
 	double _value;
 					
@@ -103,24 +105,26 @@ public:
 	Potencial(double val) : _value(val) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial() { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x){ 
-		double _potencial = _value;
-		int i;
-		for (i = 0; i < x ; i++) { //ta aqui o erro
-			//_potencial *= _value;//aqui ta o erro, acho que eh potencial = potencial^value
-			_potencial = pow(x, _value);
-
-			/*if (x == 0) // Qualquer numero elevado a 0 é igual 1
-			{
-				_potencial = 1;
-			}
-			*/
+		//double _potencial = 0;
+		//int i;
+		//for (i = 0; i < x ; i++) { //ta aqui o erro
+		if (f != NULL) {
+			return pow((*f)(x), _value);
 		}
-		return (_potencial);
+		else {
+			return pow(x, _value);
+		}
+
+			
+		//}
+		//return (_potencial);
 	}
 private:
 	double _value;
 	Funcao* f;
 };
+
+
 
 class Exponencial : public Funcao {
 public:
@@ -153,7 +157,7 @@ public:
 	Seno(double val) : _value(val) {}
 	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
-		return (sin(x));
+		return (sin(x) * _value);
 	}
 
 private:
@@ -183,16 +187,27 @@ private:
 
 void main()
 {
-	
-	Escalar g(1, new Potencial (2)); //g(x) = 1x^2
-	Escalar h(1);					 //h(x) = 3x
-	Constante i(1);				 //i(x) = 10
-		
 
-	FuncaoAgregada f;
-	f.agrega(&g); 
-	f.agrega(&h); 
-	f.agrega(&i);
+	Escalar a(1, new Potencial (2)); //a(x) = 1x^2
+	Constante b(5);					 //b(x) = 5
+	FuncaoAgregada c;				 //c(x) = (x^2 + 5)	
+	c.agrega(&a); 
+	c.agrega(&b); 
+
+	Escalar d(2);					 //d(x) = 2x	
+	Constante e(-1);				 //e(x) = -1;
+	FuncaoAgregada f;			     //f(x) = (2x -1)		
+	f.agrega(&d);
+	f.agrega(&e);
+
+	Seno g = Seno(&f);				//g((f(x))= Seno (2x -1)
+	Escalar h(5, &g);				//5*g((f(x))= 5*(Seno (2x -1))
+	FuncaoAgregada i;				//i(x) = 5*(Seno (2x -1))
+	i.agrega(&h);
+
+	FuncaoAgregada j;				//j(x) = (x^2 + 5)	+ 5*(Seno (2x -1))
+	j.agrega(&c);					//c(x) = (x^2 + 5)	
+	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
 
 	/*double x = 0;
 	while (x < 5) {
@@ -201,7 +216,7 @@ void main()
 	}*/
 	
 	cout << " A integral de [0,5] : ";
-	cout << Funcao::integrar(&f, 0, 5, 1) << endl;
+	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
 	
 //	f(1);
 }
