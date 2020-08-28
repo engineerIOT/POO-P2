@@ -205,17 +205,14 @@ private:
 	Funcao* f;
 };
 
+void teste() {
 
-void main()
-{
-
-	
-	Escalar a(1, new Potencial (2)); //a(x) = 1x^2
+	Escalar a(1, new Potencial(2)); //a(x) = 1x^2
 	//Potencial a(2);
 	Constante b(5);					 //b(x) = 5
 	FuncaoAgregada c;				 //c(x) = (x^2 + 5)	
-	c.agrega(&a); 
-	c.agrega(&b); 
+	c.agrega(&a);
+	c.agrega(&b);
 
 	Escalar d(2);					 //d(x) = 2x	
 	Constante e(-1);				 //e(x) = -1;
@@ -231,8 +228,8 @@ void main()
 	FuncaoAgregada j;				//j(x) = (x^2 + 5)	+ 5*(Seno (2x -1))
 	j.agrega(&c);					//c(x) = (x^2 + 5)	
 	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
-	
-	
+
+
 	//Potencial p(2, new Escalar(2));
 	//cout << p(3) << endl;
 
@@ -241,11 +238,20 @@ void main()
 		cout << "f(" << x << ") = " << f(x) << endl;
 		x += 1;
 	}*/
-	
+
 	cout << " A integral de [0,5] : ";
 	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
+
+	//	f(1);
+
+}
+
+
+void main()
+{
+
 	
-//	f(1);
+	
 }
 
 #endif // ELVIS_P2_H_INCLUDED
