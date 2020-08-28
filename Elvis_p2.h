@@ -21,7 +21,7 @@ public:
 		double _operatorX1;
 		double _i;
 
-		for (_i = x0 ; _i < x1-1; _i += step)
+		for (_i = x0 +step ; _i < x1-1; _i += step)
 		{
 			cout << "f(x) = " << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
@@ -30,9 +30,12 @@ public:
 
 		_operatorX0 = f->operator()(x0);
 		_operatorX1 = f->operator()(x1);
-		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1);
+		//double _somaOperador = (_operatorX1 + _operatorX0);
+		//double _diferencaOperador = (_operatorX1 - _operatorX0);
+		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1); //formula do trapezio
 		return _i;
 		
+			
 	}
 
 private:
@@ -55,7 +58,7 @@ public:
 		for (_myVectorFunction::iterator it= _myvector.begin(); it != _myvector.end(); it++) {
 			_funcaoAgregada += static_cast<Funcao*>(*it)->operator()(x);
 		}
-		cout << "Funcao agrgada resultado: f(" << x << ")= " << _funcaoAgregada << endl;
+		//cout << "Funcao agrgada resultado: f(" << x << ")= " << _funcaoAgregada << endl;
 		return _funcaoAgregada;
 
 	}
@@ -85,10 +88,21 @@ public:
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
+		/*double _valorEscalar = 0;
+		while (f != NULL) {
+			_valorEscalar = (*f)(x);
+			return (_valorEscalar);
+		}
+		return (_value * _valorEscalar);
+		*/
+
+		
+
 		_escalarResultado = _value * x;
-		cout << "x = " << x << endl;
-		cout << "escalar resultado: " << _escalarResultado << endl;
+		//cout << "x = " << x << endl;
+		//cout << "escalar resultado: " << _escalarResultado << endl;
 		return(_escalarResultado);
+		
 	}
 
 	
@@ -173,7 +187,7 @@ public:
 			_valorSeno = sin((*f)(x));
 				return (_valorSeno);
 		}
-		 _valorSeno = sin(x);
+		 _valorSeno = sin((x));
 		 return (_valorSeno);
 	}
 
@@ -213,6 +227,8 @@ void teste() {
 	FuncaoAgregada c;				 //c(x) = (x^2 + 5)	
 	c.agrega(&a);
 	c.agrega(&b);
+	
+
 
 	Escalar d(2);					 //d(x) = 2x	
 	Constante e(-1);				 //e(x) = -1;
@@ -233,11 +249,11 @@ void teste() {
 	//Potencial p(2, new Escalar(2));
 	//cout << p(3) << endl;
 
-	/*double x = 0;
+	double x = 0;
 	while (x < 5) {
 		cout << "f(" << x << ") = " << f(x) << endl;
-		x += 1;
-	}*/
+		x += 0.01;
+	}
 
 	cout << " A integral de [0,5] : ";
 	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
@@ -247,12 +263,11 @@ void teste() {
 }
 
 
-void main()
-{
-
-	
-	
+int main() {
+	teste();
+	return 9999;
 }
+
 
 #endif // ELVIS_P2_H_INCLUDED
 
