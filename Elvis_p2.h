@@ -1,7 +1,7 @@
 #include <iostream>		//biblioteca entradas e saidas
 using namespace std;
 #include <vector>		//adicionada para utilizar na funcao agrega
-#include <math.h>
+#include <math.h>	     			
 
 class Funcao {				//Uma classe abstrata que serve de modelo para outras classes.
 public:
@@ -15,18 +15,18 @@ public:
 	static double integrar (Funcao* f, double x0, double x1, double step){	// método estático 
 		double _area = 0;
 		double _operatorX0;
-		double _operatorXn;
+		double _operatorX1;
 		double _i;
 
-		for (_i = x0 +step ; _i < x1; _i += step)
+		for (_i = x0 ; _i <= x1; _i += step)
 		{
 			cout << "f(x) = " << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
 		}
 
 		_operatorX0 = f->operator()(x0);
-		_operatorXn = f->operator()(x1);
-		_i = (step / 2) * (_operatorXn + 2 * _area + _operatorXn);
+		_operatorX1 = f->operator()(x1);
+		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1);
 		return _i;
 		
 	}
@@ -76,7 +76,7 @@ private:
 
 class Escalar : public Funcao {
 public:
-	Escalar (double val,Funcao *f): _value(val), f(f){ /*x = f->operator()(x)*/}
+	Escalar (double val,Funcao *f): _value(val), f(f){ }
 	Escalar(Funcao* f) : f(f){ } //comentado porque estava dando conflito com o outro construtor
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
@@ -91,8 +91,7 @@ public:
 private:
 	double _value;
 					
-	Funcao* f; // teira q acessar o operator de f mas n sei se da de  fzr isso no mesmo operator do e
-			   // talvez ttenha que instanciar dentro da classe?	
+	Funcao* f; 			  
 	double _escalarResultado;
 	double x;
 };
@@ -108,14 +107,11 @@ public:
 		//double _potencial = 0;
 		//int i;
 		//for (i = 0; i < x ; i++) { //ta aqui o erro
-		if (f != NULL) {
+		while (f != NULL) {
 			return pow((*f)(x), _value);
 		}
-		else {
-			return pow(x, _value);
-		}
-
-			
+			return pow((x), _value);
+					
 		//}
 		//return (_potencial);
 	}
@@ -133,6 +129,15 @@ public:
 	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
 	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
+
+		while (f != NULL) {
+			return pow(_value, (*f)(x));
+		}
+		
+			return pow(_value, x);
+		}
+
+		/*
 		double _exponencial = _value;
 		int i;
 		for (i = 0; i < (x - 1); i++) {
@@ -144,7 +149,9 @@ public:
 			}
 		}
 		return (_exponencial);
-	}
+		*/
+
+
 private:
 	double _value;
 	Funcao* f;
@@ -157,7 +164,13 @@ public:
 	Seno(double val) : _value(val) {}
 	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
-		return (sin(x) * _value);
+		double _valorSeno = 0;
+		while (f != NULL) {
+			_valorSeno = sin((*f)(x));
+				return (_valorSeno);
+		}
+		 _valorSeno = sin(x);
+		 return (_valorSeno);
 	}
 
 private:
@@ -188,7 +201,9 @@ private:
 void main()
 {
 
+	
 	Escalar a(1, new Potencial (2)); //a(x) = 1x^2
+	//Potencial a(2);
 	Constante b(5);					 //b(x) = 5
 	FuncaoAgregada c;				 //c(x) = (x^2 + 5)	
 	c.agrega(&a); 
@@ -208,6 +223,10 @@ void main()
 	FuncaoAgregada j;				//j(x) = (x^2 + 5)	+ 5*(Seno (2x -1))
 	j.agrega(&c);					//c(x) = (x^2 + 5)	
 	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
+	
+	
+	//Potencial p(2, new Escalar(2));
+	//cout << p(3) << endl;
 
 	/*double x = 0;
 	while (x < 5) {
