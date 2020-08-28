@@ -1,3 +1,6 @@
+#ifndef ELVIS_P2_H_INCLUDED
+#define ELVIS_P2_H_INCLUDED
+
 #include <iostream>		//biblioteca entradas e saidas
 using namespace std;
 #include <vector>		//adicionada para utilizar na funcao agrega
@@ -18,10 +21,11 @@ public:
 		double _operatorX1;
 		double _i;
 
-		for (_i = x0 ; _i <= x1; _i += step)
+		for (_i = x0 ; _i < x1-1; _i += step)
 		{
 			cout << "f(x) = " << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
+
 		}
 
 		_operatorX0 = f->operator()(x0);
@@ -57,7 +61,7 @@ public:
 	}
 private:
 	_myVectorFunction _myvector;
-	//vector <Funcao*> ::iterator it; //substituito porque nao estava agregando as funcoes
+	//vector <Funcao*> ::iterator it; //substituido porque nao estava agregando as funcoes
 };
 
 
@@ -186,16 +190,20 @@ public:
 	Coseno(double val) : _value(val) {}
 	Coseno() { cout << "(" << this << ") Coseno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
-		return (cos(x));
+		double _valorCoseno = 0;
+		while (f != NULL) {
+			_valorCoseno = cos((*f)(x));
+			return (_valorCoseno);
+		}
+		_valorCoseno = cos(x);
+		return (_valorCoseno);
+	
 	}
 
 private:
 	double _value;
 	Funcao* f;
 };
-
-
-
 
 
 void main()
@@ -239,4 +247,6 @@ void main()
 	
 //	f(1);
 }
+
+#endif // ELVIS_P2_H_INCLUDED
 
