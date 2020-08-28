@@ -7,6 +7,7 @@ using namespace std;
 #include <math.h>	    //adicionada para utilizar nas funcoes seno e coseno 			
 #define VALUE_DEFAULT	70.29525	
 
+
 class Funcao {				//Uma classe abstrata que serve de modelo para outras classes.
 public:
 	Funcao(Funcao* f) { } //ponteiro para a uncao empregada (f)
@@ -22,7 +23,7 @@ public:
 		double _operatorX1;
 		double _i;
 
-		for (_i = step; _i <= x1-1; _i += step)
+		for (_i = x0+step; _i < x1; _i += step)
 		{	
 			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
@@ -90,12 +91,12 @@ public:
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
-		/*double _valorEscalar = 0;
-		while (f != NULL) {
-			_valorEscalar = (*f)(x);
-			return (_valorEscalar);
+		/*double _valorEscalar = 0;*/
+		if(f != NULL) {
+			x = (*f)(x);
+			//return (_valorEscalar);
 		}
-		return (_value * _valorEscalar);
+		/*return (_value * _valorEscalar);
 		*/
 
 		
@@ -121,18 +122,34 @@ class Potencial : public Funcao {
 public:
 	Potencial(double val, Funcao *f): _value(val), f(f){ }
 	Potencial(Funcao* f) : f(f) {}
-	Potencial(double val) : _value(val) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
-	Potencial() { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
+	Potencial(double val) : _value(val), f(0) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
+	Potencial(): f(0) { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x){ 
 		//double _potencial = 0;
 		//int i;
 		//for (i = 0; i < x ; i++) { //ta aqui o erro
-		while (f != NULL) {
+		if(f != NULL) {
 			return pow((*f)(x), _value);
 		}
 			return pow((x), _value);
 					
 		//}
+			/* caso n tenha funcao ele calcula normal
+			* inicializaar a f em zero para garantir q qnd n tem nd é null msm
+			double operator()(double x) {
+
+		double fx = 0;
+
+		if (f != NULL) {
+			x = f->operator()(x);
+		}
+		cout << "f(x) = x^" << a << endl;
+		cout << "f(" << x << ")= " << x << "^" << a << endl;
+		fx = pow(x, a);
+		cout << "potenciacao resultado: " << fx << endl;
+
+		return fx;
+	}*/
 		//return (_potencial);
 	}
 private:
@@ -150,7 +167,7 @@ public:
 	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 
-		while (f != NULL) {
+		if (f != NULL) {
 			return pow(_value, (*f)(x));
 		}
 		
@@ -185,7 +202,7 @@ public:
 	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		double _valorSeno = 0;
-		while (f != NULL) {
+		if (f != NULL) {
 			_valorSeno = sin((*f)(x));
 				return (_valorSeno);
 		}
@@ -207,7 +224,7 @@ public:
 	Coseno() { cout << "(" << this << ") Coseno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		double _valorCoseno = 0;
-		while (f != NULL) {
+		if (f != NULL) {
 			_valorCoseno = cos((*f)(x));
 			return (_valorCoseno);
 		}
@@ -230,7 +247,7 @@ void teste() {
 	c.agrega(&a);
 	c.agrega(&b);
 	
-
+	//ei, vc viu ele esta indo apenasa ate f(4) , temos que ajeitar a funcao integrar ok
 
 	Escalar d(2);					 //d(x) = 2x	
 	Constante e(-1);				 //e(x) = -1;
