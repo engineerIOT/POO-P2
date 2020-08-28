@@ -23,8 +23,9 @@ public:
 
 		for (_i = step; _i <= x1-1; _i += step)
 		{
-			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
+			
 			_area += ((f->operator()(_i)));
+			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
 		}
 
 		_operatorX0 = f->operator()(x0);
@@ -243,22 +244,12 @@ void teste() {
 	FuncaoAgregada j;				//j(x) = (x^2 + 5)	+ 5*(Seno (2x -1))
 	j.agrega(&c);					//c(x) = (x^2 + 5)	
 	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
-
-
-	//Potencial p(2, new Escalar(2));
-	//cout << p(3) << endl;
-	/*
-	double x = 0;
-	while (x < 5) {
-		cout << "f(" << x << ") = " << f(x) << endl;
-		x += 0.01;
-	}
-	*/
+		
 	cout << " A integral de [0,5] : ";
 	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
-	
-	//	f(1);
 
+
+	
 }
 
 
