@@ -15,9 +15,9 @@ public:
 	virtual ~Funcao() { /*cout << "(" << this << ") Funcao Desconstructed!" << endl;*/ }  //destrutor padrao
 	//double operator() (double x) = 0;
 	virtual double operator()(double x) = 0;
-	
 
-	static double integrar (Funcao* f, double x0, double x1, double step){	// método estático 
+
+	static double integrar(Funcao* f, double x0, double x1, double step) {	// método estático 
 		double _area = 0;
 		double _operatorX0;
 		double _operatorX1;
@@ -25,21 +25,21 @@ public:
 
 		//for (_i = x0+step; _i < x1; _i += step)
 		for (_i = x0; _i < x1; _i += step)
-		{	
+		{
 			cout << "\n" "f(" << _i << ")=" << f->operator()(_i) << endl;
 			_area += ((f->operator()(_i)));
 		}
 
 		_operatorX0 = f->operator()(x0);
 		_operatorX1 = f->operator()(x1);
-		
-		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1);
-		double erro = ((_i -(VALUE_DEFAULT)) / _i)* 100;
-		cout << endl <<"erro = " << fabs(erro) << "%" << endl;	
+
+		_i = (step / 2) * (_operatorX0 + 2 * _area + _operatorX1);
+		double erro = ((_i - (VALUE_DEFAULT)) / _i) * 100;
+		cout << endl << "erro = " << fabs(erro) << "%" << endl;
 		cout << endl << "Integral final = " << (_i) << endl;
 		return _i;
-		
-			
+
+
 	}
 
 private:
@@ -59,7 +59,7 @@ public:
 	}
 	double operator()(double x) {
 		double _funcaoAgregada = 0;
-		for (_myVectorFunction::iterator it= _myvector.begin(); it != _myvector.end(); it++) {
+		for (_myVectorFunction::iterator it = _myvector.begin(); it != _myvector.end(); it++) {
 			_funcaoAgregada += static_cast<Funcao*>(*it)->operator()(x);
 		}
 		//cout << "Funcao agregada resultado: f(" << x << ")= " << _funcaoAgregada << endl;
@@ -77,7 +77,7 @@ public:
 	Constante(double val) : _value(val) { cout << "(" << this << ") constante(x)=(" << _value << ") " << endl; }
 	Constante() { cout << "(" << this << ") Constante Constructed!" << endl; }
 	double operator()(double x) {
-				return (_value);
+		return (_value);
 	}
 
 private:
@@ -87,13 +87,13 @@ private:
 
 class Escalar : public Funcao {
 public:
-	Escalar (double val,Funcao *f): _value(val), f(f){ cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
-	Escalar(Funcao* f) : f(f){ }
+	Escalar(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
+	Escalar(Funcao* f) : f(f) { }
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { cout << "(" << this << ") Escalar Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		/*double _valorEscalar = 0;*/
-		if(f != NULL) {
+		if (f != NULL) {
 			x = (*f)(x);
 			//return (_valorEscalar);
 		}
@@ -103,14 +103,15 @@ public:
 		//cout << "x = " << x << endl;
 		//cout << "escalar resultado: " << _escalarResultado << endl;
 		return(_escalarResultado);
-		
+
 	}
 
-	
+
+
 private:
 	double _value;
-					
-	Funcao* f; 			  
+
+	Funcao* f;
 	double _escalarResultado;
 	double x;
 };
@@ -118,15 +119,15 @@ private:
 
 class Potencial : public Funcao {
 public:
-	Potencial(double val, Funcao *f): _value(val), f(f){ cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
+	Potencial(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial(Funcao* f) : f(f) {}
 	Potencial(double val) : _value(val)/*, f(0)*/ { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial()/*: f(0)*/ { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
-	double operator()(double x){ 
-			if(f != NULL) {
+	double operator()(double x) {
+		if (f != NULL) {
 			return pow((*f)(x), _value);
 		}
-			return pow((x), _value);
+		return pow((x), _value);
 	}
 private:
 	double _value;
@@ -146,23 +147,23 @@ public:
 		if (f != NULL) {
 			return pow(_value, (*f)(x));
 		}
-		
-			return pow(_value, x);
-		}
 
-		/*
-		double _exponencial = _value;
-		int i;
-		for (i = 0; i < (x - 1); i++) {
-			_exponencial *= _value;
+		return pow(_value, x);
+	}
 
-			if (x == 0) // Qualquer numero elevado a 0 é igual 1
-			{
-				_exponencial = 1;
-			}
+	/*
+	double _exponencial = _value;
+	int i;
+	for (i = 0; i < (x - 1); i++) {
+		_exponencial *= _value;
+
+		if (x == 0) // Qualquer numero elevado a 0 é igual 1
+		{
+			_exponencial = 1;
 		}
-		return (_exponencial);
-		*/
+	}
+	return (_exponencial);
+	*/
 
 
 private:
@@ -180,17 +181,17 @@ public:
 		double _valorSeno = 0;
 		if (f != NULL) {
 			_valorSeno = sin((*f)(x));
-				return (_valorSeno);
+			return (_valorSeno);
 		}
-		 _valorSeno = sin((x));
-		 return (_valorSeno);
+		_valorSeno = sin((x));
+		return (_valorSeno);
 	}
 
 private:
 	double _value;
 	Funcao* f;
 
-};	
+};
 
 class Coseno : public Funcao {
 public:
@@ -206,7 +207,7 @@ public:
 		}
 		_valorCoseno = cos(x);
 		return (_valorCoseno);
-	
+
 	}
 
 private:
@@ -222,7 +223,7 @@ void teste() {
 	FuncaoAgregada c;				 //c(x) = (x^2 + 5)	
 	c.agrega(&a);
 	c.agrega(&b);
-	
+
 	Escalar d(2);					 //d(x) = 2x	
 	Constante e(-1);				 //e(x) = -1;
 	FuncaoAgregada f;			     //f(x) = (2x -1)		
@@ -237,11 +238,11 @@ void teste() {
 	FuncaoAgregada j;				//j(x) = (x^2 + 5)	+ 5*(Seno (2x -1))
 	j.agrega(&c);					//c(x) = (x^2 + 5)	
 	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
-		
-	cout << endl << " A integral de [0,5] : "<< endl;
+
+	cout << endl << " A integral de [0,5] : " << endl;
 	cout << endl << Funcao::integrar(&j, 0, 5, 0.01) << endl;
 
-		
+
 }
 
 
