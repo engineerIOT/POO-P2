@@ -75,7 +75,7 @@ private:
 class Constante : public Funcao {
 public:
 	Constante(double val) : _value(val) { cout << "(" << this << ") constante(x)=(" << _value << ") " << endl; }
-	Constante() {}
+	Constante() { cout << "(" << this << ") Constante Constructed!" << endl; }
 	double operator()(double x) {
 				return (_value);
 	}
@@ -90,7 +90,7 @@ public:
 	Escalar (double val,Funcao *f): _value(val), f(f){ cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar(Funcao* f) : f(f){ }
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
-	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
+	Escalar() { cout << "(" << this << ") Escalar Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		/*double _valorEscalar = 0;*/
 		if(f != NULL) {
@@ -120,35 +120,13 @@ class Potencial : public Funcao {
 public:
 	Potencial(double val, Funcao *f): _value(val), f(f){ cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial(Funcao* f) : f(f) {}
-	Potencial(double val) : _value(val), f(0) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
-	Potencial(): f(0) { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
+	Potencial(double val) : _value(val)/*, f(0)*/ { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
+	Potencial()/*: f(0)*/ { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x){ 
-		//double _potencial = 0;
-		//int i;
-		//for (i = 0; i < x ; i++) { //ta aqui o erro
-		if(f != NULL) {
+			if(f != NULL) {
 			return pow((*f)(x), _value);
 		}
 			return pow((x), _value);
-					
-		//}
-			/* caso n tenha funcao ele calcula normal
-			* inicializaar a f em zero para garantir q qnd n tem nd é null msm
-			double operator()(double x) {
-
-		double fx = 0;
-
-		if (f != NULL) {
-			x = f->operator()(x);
-		}
-		cout << "f(x) = x^" << a << endl;
-		cout << "f(" << x << ")= " << x << "^" << a << endl;
-		fx = pow(x, a);
-		cout << "potenciacao resultado: " << fx << endl;
-
-		return fx;
-	}*/
-		//return (_potencial);
 	}
 private:
 	double _value;
@@ -162,7 +140,7 @@ public:
 	Exponencial(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
 	Exponencial(Funcao* f) : f(f) {}
 	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
-	Exponencial() { /*cout << "(" << this << ") Exponencial Constructed!" << endl;*/ } //construtor padrao
+	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 
 		if (f != NULL) {
@@ -197,7 +175,7 @@ public:
 	Seno(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Seno(" << _value << ") Constructed!" << endl; }
 	Seno(Funcao* f) : f(f) {}
 	Seno(double val) : _value(val) { cout << "(" << this << ") Seno(" << _value << ") Constructed!" << endl; }
-	Seno() { /*cout << "(" << this << ") Seno Constructed!" << endl;*/ } //construtor padrao
+	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		double _valorSeno = 0;
 		if (f != NULL) {
@@ -219,7 +197,7 @@ public:
 	Coseno(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Coseno(" << _value << ") Constructed!" << endl; }
 	Coseno(Funcao* f) : f(f) {}
 	Coseno(double val) : _value(val) { cout << "(" << this << ") Coseno(" << _value << ") Constructed!" << endl; }
-	Coseno() { /*cout << "(" << this << ") Coseno Constructed!" << endl;*/ } //construtor padrao
+	Coseno() { cout << "(" << this << ") Coseno Constructed!" << endl; } //construtor padrao
 	double operator()(double x) {
 		double _valorCoseno = 0;
 		if (f != NULL) {
