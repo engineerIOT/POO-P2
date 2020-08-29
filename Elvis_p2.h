@@ -4,7 +4,7 @@
 #include <iostream>		//biblioteca entradas e saidas
 using namespace std;
 #include <vector>		//adicionada para utilizar na funcao agrega
-#include <math.h>	    //adicionada para utilizar nas funcoes seno e coseno 			
+//#include <math.h>	    //adicionada para utilizar nas funcoes seno e coseno 			
 #define VALUE_DEFAULT	70.29525	
 
 
@@ -26,17 +26,17 @@ public:
 		//for (_i = x0+step; _i < x1; _i += step)
 		for (_i = x0; _i < x1; _i += step)
 		{	
-			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
+			cout << "\n" "f(" << _i << ")=" << f->operator()(_i) << endl;
 			_area += ((f->operator()(_i)));
 		}
 
 		_operatorX0 = f->operator()(x0);
 		_operatorX1 = f->operator()(x1);
-		//double _somaOperador = (_operatorX1 + _operatorX0);
-		//double _diferencaOperador = (_operatorX1 - _operatorX0);
+		
 		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1);
 		double erro = ((_i -(VALUE_DEFAULT)) / _i)* 100;
-		cout << "erro = " << fabs(erro) << "%" << "\n";		//
+		cout << endl <<"erro = " << fabs(erro) << "%" << endl;	
+		cout << endl << "Integral final = " << (_i) << endl;
 		return _i;
 		
 			
@@ -44,10 +44,10 @@ public:
 
 private:
 
-	static double _i;
+	//static double _i;
 };
 
-double Funcao::_i;
+//double Funcao::_i;
 
 typedef vector<Funcao*> _myVectorFunction;
 
@@ -238,8 +238,9 @@ void teste() {
 	j.agrega(&c);					//c(x) = (x^2 + 5)	
 	j.agrega(&i);					//i(x) = 5*(Seno (2x -1))	
 		
-	cout << " A integral de [0,5] : ";
-	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
+	cout << endl << " A integral de [0,5] : "<< endl;
+	cout << endl << Funcao::integrar(&j, 0, 5, 0.01) << endl;
+
 		
 }
 
