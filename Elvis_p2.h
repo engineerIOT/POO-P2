@@ -23,7 +23,8 @@ public:
 		double _operatorX1;
 		double _i;
 
-		for (_i = x0+step; _i < x1; _i += step)
+		//for (_i = x0+step; _i < x1; _i += step)
+		for (_i = x0; _i < x1; _i += step)
 		{	
 			cout << "f(" << _i << ")=" << f->operator()(_i) << "\n";
 			_area += ((f->operator()(_i)));
@@ -33,9 +34,9 @@ public:
 		_operatorX1 = f->operator()(x1);
 		//double _somaOperador = (_operatorX1 + _operatorX0);
 		//double _diferencaOperador = (_operatorX1 - _operatorX0);
-		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1); //formula do trapezio
+		_i = (step/2) * (_operatorX0 + 2 * _area + _operatorX1);
 		double erro = ((_i -(VALUE_DEFAULT)) / _i)* 100;
-		cout << "erro = " << fabs(erro) << "%" << "\n";
+		cout << "erro = " << fabs(erro) << "%" << "\n";		//
 		return _i;
 		
 			
@@ -86,8 +87,8 @@ private:
 
 class Escalar : public Funcao {
 public:
-	Escalar (double val,Funcao *f): _value(val), f(f){ }
-	Escalar(Funcao* f) : f(f){ } //comentado porque estava dando conflito com o outro construtor
+	Escalar (double val,Funcao *f): _value(val), f(f){ cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
+	Escalar(Funcao* f) : f(f){ }
 	Escalar(double val) : _value(val) { cout << "(" << this << ") escalar(x)=(" << _value << ") " << endl; }
 	Escalar() { /*cout << "(" << this << ") Escalar Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
@@ -98,9 +99,6 @@ public:
 		}
 		/*return (_value * _valorEscalar);
 		*/
-
-		
-
 		_escalarResultado = _value * x;
 		//cout << "x = " << x << endl;
 		//cout << "escalar resultado: " << _escalarResultado << endl;
@@ -120,7 +118,7 @@ private:
 
 class Potencial : public Funcao {
 public:
-	Potencial(double val, Funcao *f): _value(val), f(f){ }
+	Potencial(double val, Funcao *f): _value(val), f(f){ cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial(Funcao* f) : f(f) {}
 	Potencial(double val) : _value(val), f(0) { cout << "(" << this << ") Potencial(" << _value << ") Constructed!" << endl; }
 	Potencial(): f(0) { cout << "(" << this << ") Potencial Constructed!" << endl; } //construtor padrao
@@ -161,10 +159,10 @@ private:
 
 class Exponencial : public Funcao {
 public:
-	Exponencial(double val, Funcao* f) : _value(val), f(f) {}
+	Exponencial(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
 	Exponencial(Funcao* f) : f(f) {}
 	Exponencial(double val) : _value(val) { cout << "(" << this << ") Exponencial(" << _value << ") Constructed!" << endl; }
-	Exponencial() { cout << "(" << this << ") Exponencial Constructed!" << endl; } //construtor padrao
+	Exponencial() { /*cout << "(" << this << ") Exponencial Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
 
 		if (f != NULL) {
@@ -196,10 +194,10 @@ private:
 
 class Seno : public Funcao {
 public:
-	Seno(double val, Funcao* f) : _value(val), f(f) {}
+	Seno(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Seno(" << _value << ") Constructed!" << endl; }
 	Seno(Funcao* f) : f(f) {}
-	Seno(double val) : _value(val) {}
-	Seno() { cout << "(" << this << ") Seno Constructed!" << endl; } //construtor padrao
+	Seno(double val) : _value(val) { cout << "(" << this << ") Seno(" << _value << ") Constructed!" << endl; }
+	Seno() { /*cout << "(" << this << ") Seno Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
 		double _valorSeno = 0;
 		if (f != NULL) {
@@ -218,10 +216,10 @@ private:
 
 class Coseno : public Funcao {
 public:
-	Coseno(double val, Funcao* f) : _value(val), f(f) {}
+	Coseno(double val, Funcao* f) : _value(val), f(f) { cout << "(" << this << ") Coseno(" << _value << ") Constructed!" << endl; }
 	Coseno(Funcao* f) : f(f) {}
-	Coseno(double val) : _value(val) {}
-	Coseno() { cout << "(" << this << ") Coseno Constructed!" << endl; } //construtor padrao
+	Coseno(double val) : _value(val) { cout << "(" << this << ") Coseno(" << _value << ") Constructed!" << endl; }
+	Coseno() { /*cout << "(" << this << ") Coseno Constructed!" << endl;*/ } //construtor padrao
 	double operator()(double x) {
 		double _valorCoseno = 0;
 		if (f != NULL) {
@@ -247,8 +245,6 @@ void teste() {
 	c.agrega(&a);
 	c.agrega(&b);
 	
-	//ei, vc viu ele esta indo apenasa ate f(4) , temos que ajeitar a funcao integrar ok
-
 	Escalar d(2);					 //d(x) = 2x	
 	Constante e(-1);				 //e(x) = -1;
 	FuncaoAgregada f;			     //f(x) = (2x -1)		
@@ -266,9 +262,7 @@ void teste() {
 		
 	cout << " A integral de [0,5] : ";
 	cout << Funcao::integrar(&j, 0, 5, 0.01) << endl;
-
-
-	
+		
 }
 
 
